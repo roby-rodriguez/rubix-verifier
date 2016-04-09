@@ -1,0 +1,11 @@
+# Target & binaries
+target
+bin
+
+# Configuration files & folders
+.classpath
+.project
+.mvn
+.settings
+
+# Generated stuff
