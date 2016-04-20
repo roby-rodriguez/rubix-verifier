@@ -27,4 +27,9 @@ public final class CubeConstants {
                     "fbedac", "bedfac", "edfbac", "dfbeac",
                     "fdebca", "debfca", "ebfdca", "bfdeca"
             );
+    
+    /**
+     * := CUBE_PERMUTATIONS.size() ^ 2
+     */
+    public static final int TOTAL_NR_OF_COMBINATIONS = 529;
 }
