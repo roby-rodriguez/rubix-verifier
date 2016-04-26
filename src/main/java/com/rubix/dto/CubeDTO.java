@@ -39,11 +39,14 @@ public class CubeDTO {
                 transformed.setFaces(relabeled);
             }
         }
+        // todo 1) in each iteration you could reuse the 'relabeled' obtained in the previous step
+        // todo 2) why not break this into two operations + use java 8 streams
         if (permutation != null && !permutation.isEmpty()) {
             List<String> permuted = new ArrayList<>();
             for (int i = 0; i < permutation.length(); i++) {
                 permuted.add(transformed.getFaces().get(CubeConstants.ORIGINAL.indexOf(permutation.charAt(i))));
             }
+            transformed.setFaces(permuted);
         }
         return transformed;
     }

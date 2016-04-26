@@ -8,3 +8,4 @@ Verifier service for the rubix project
 * [completable futures](http://www.infoq.com/articles/Functional-Style-Callbacks-Using-CompletableFuture)
 * [callback style](http://stackoverflow.com/questions/826212/java-executors-how-to-be-notified-without-blocking-when-a-task-completes#answer-22363245)
 * [deferred results](http://xpadro.blogspot.de/2015/07/understanding-callable-and-spring.html)
+* [nice sample code grep](http://www.programcreek.com/java-api-examples/index.php?api=java.util.concurrent.CompletableFuture)
