@@ -4,5 +4,5 @@ import com.rubix.entity.CubeEntity;
 
 public interface CubeCustomRepository {
 
-    CubeEntity findByKey(String key);
+    CubeEntity findByKey(String key, String collection);
 }

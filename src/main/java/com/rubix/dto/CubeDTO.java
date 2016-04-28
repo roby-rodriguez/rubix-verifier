@@ -7,6 +7,7 @@ import com.rubix.constant.CubeConstants;
 
 public class CubeDTO {
 
+    private int size;
     private List<String> faces;
 
     public CubeDTO() {
@@ -14,7 +15,16 @@ public class CubeDTO {
     }
 
     public CubeDTO(final CubeDTO cubeDTO) {
+        this.size = cubeDTO.size;
         this.faces = new ArrayList<>(cubeDTO.getFaces());
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public List<String> getFaces() {

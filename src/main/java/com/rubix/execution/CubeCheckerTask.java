@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
+import com.rubix.constant.CubeConstants;
 import com.rubix.dto.CubeDTO;
 import com.rubix.entity.CubeEntity;
 import com.rubix.repository.impl.CubeRepositoryImpl;
@@ -21,12 +22,13 @@ public class CubeCheckerTask {
     private CubeRepositoryImpl cubeRepository;
 
     @Async
-    public CompletableFuture<CubeEntity> check(final CubeDTO cube, final String label, final String permutation) {
-        LOGGER.info("Checking combination: " + label + " (label) " + permutation + " (permutation)");
+    public CompletableFuture<CubeEntity> check(final CubeDTO cube, String label, String permutation) {
+        LOGGER.debug("Checking combination: " + label + " (label) " + permutation + " (permutation)");
         final CubeDTO alternate = cube.transform(label, permutation);
-        final String state = alternate.toString();
-        final CubeEntity result = cubeRepository.findByKey(state);
-        LOGGER.info("Finished combination: " + label + " (label) " + permutation + " (permutation)." + " State: "
+        String state = alternate.toString();
+        String collection = CubeConstants.getCollection(alternate.getSize());
+        final CubeEntity result = cubeRepository.findByKey(state, collection);
+        LOGGER.debug("Finished combination: " + label + " (label) " + permutation + " (permutation)." + " State: "
                 + state + (result == null ? " not " : " ") + "found");
         return CompletableFuture.completedFuture(result);
     }

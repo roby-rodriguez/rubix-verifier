@@ -13,8 +13,8 @@ public class CubeCheckerServiceManager {
     }
 
     public boolean checkFinished() {
-        // System.out.println(counter.incrementAndGet());
-        // return counter.get() == total;
-        return counter.incrementAndGet() == total;
+        System.out.println(counter.incrementAndGet());
+        return counter.get() == total;
+        // return counter.incrementAndGet() == total;
     }
 }

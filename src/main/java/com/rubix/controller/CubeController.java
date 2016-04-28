@@ -27,6 +27,7 @@ public class CubeController {
             throws InterruptedException, ExecutionException {
         // todo add application exception that wraps every other ex just like ApplicationException from pisc
         final DeferredResult<CubeEntity> deferredResult = new DeferredResult<>();
+        // initiate processing in another thread and let go of the current thread to handle some more requests
         cubeCheckerService.check(cube, deferredResult);
         return deferredResult;
     }

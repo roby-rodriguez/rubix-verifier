@@ -1,8 +1,5 @@
 package com.rubix.entity;
 
-import org.springframework.data.mongodb.core.mapping.Document;
-
-@Document(collection = "cube#{foo}")
 public class CubeEntity {
 
     private String key;
