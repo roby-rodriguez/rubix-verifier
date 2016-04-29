@@ -7,10 +7,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = RubixVerifierApplication.class)
-public class RubixVerifierApplicationTests {
+public abstract class RubixVerifierUnitTest {
 
-	@Test
-	public void contextLoads() {
-	}
-
+    @Test
+    public void contextLoads() {}
 }
