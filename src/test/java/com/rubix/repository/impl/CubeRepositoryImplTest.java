@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,11 +14,6 @@ public class CubeRepositoryImplTest extends CubeRepositoryTest {
 
     @Autowired
     private CubeRepositoryImpl cubeRepository;
-
-    @Before
-    public void setup() {
-        importData(CubeRepositoryTest.COLLECTION, CubeRepositoryTest.EXISTING);
-    }
 
     @Test
     public void testKeyFound() {

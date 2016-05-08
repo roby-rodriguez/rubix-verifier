@@ -1,5 +1,6 @@
 package com.rubix.repository;
 
+import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.SpringApplicationConfiguration;
@@ -27,7 +28,12 @@ public abstract class CubeRepositoryTest {
     @Autowired
     private MongoOperations mongoOperations;
 
-    protected void importData(String collection, String... keys) {
+    @Before
+    public void setup() {
+        importData(CubeRepositoryTest.COLLECTION, CubeRepositoryTest.EXISTING);
+    }
+
+    private void importData(String collection, String... keys) {
         for (String key : keys) {
             final CubeEntity cube = new CubeEntity();
             cube.setKey(key);

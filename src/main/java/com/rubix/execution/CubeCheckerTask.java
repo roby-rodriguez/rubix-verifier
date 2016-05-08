@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import com.rubix.constant.CubeConstants;
 import com.rubix.dto.CubeDTO;
 import com.rubix.entity.CubeEntity;
-import com.rubix.repository.impl.CubeRepositoryImpl;
+import com.rubix.repository.CubeCustomRepository;
 import com.rubix.service.impl.CubeCheckerServiceImpl;
 
 @Component
@@ -19,7 +19,7 @@ public class CubeCheckerTask {
     private final static Logger LOGGER = Logger.getLogger(CubeCheckerServiceImpl.class);
 
     @Autowired
-    private CubeRepositoryImpl cubeRepository;
+    private CubeCustomRepository cubeRepository;
 
     @Async
     public CompletableFuture<CubeEntity> check(final CubeDTO cube, String label, String permutation) {

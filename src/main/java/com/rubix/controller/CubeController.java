@@ -5,10 +5,10 @@ import java.util.concurrent.ExecutionException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
@@ -22,7 +22,8 @@ public class CubeController {
     @Autowired
     private CubeCheckerService cubeCheckerService;
 
-    @RequestMapping(value = "/", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/checkExists", method = RequestMethod.POST)
+    @ResponseBody
     public DeferredResult<CubeEntity> checkExists(@Valid @RequestBody final CubeDTO cube)
             throws InterruptedException, ExecutionException {
         // todo add application exception that wraps every other ex just like ApplicationException from pisc
