@@ -61,8 +61,9 @@ public class CubeControllerTest extends CubeRepositoryTest {
 
         this.mockMvc
             .perform(asyncDispatch(mvcResult))
+            // todo check that when result is written there is still one worker left running
+            // maybe a good way would be to check the count-manager latch
             .andExpect(status().isOk())
-            // todo add feed db entries and this will be solved if sending a valid value (i.e. not null)
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(content().string(""));
     }
