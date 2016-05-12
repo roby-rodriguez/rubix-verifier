@@ -27,6 +27,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rubix.config.UnitTestConfig;
 import com.rubix.dto.CubeDTO;
 import com.rubix.repository.CubeRepositoryTest;
+import com.rubix.util.CubeCheckerServiceManager;
 
 @ActiveProfiles({"test", "unit" })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -34,10 +35,13 @@ import com.rubix.repository.CubeRepositoryTest;
 @SpringApplicationConfiguration(classes = UnitTestConfig.class)
 public class CubeControllerTest extends CubeRepositoryTest {
 
+    private MockMvc mockMvc;
+
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    private MockMvc mockMvc;
+    @Autowired
+    private CubeCheckerServiceManager cubeCheckerServiceManager;
 
     @Override
     @Before
@@ -63,6 +67,7 @@ public class CubeControllerTest extends CubeRepositoryTest {
             .perform(asyncDispatch(mvcResult))
             // todo check that when result is written there is still one worker left running
             // maybe a good way would be to check the count-manager latch
+            //.andExpect(cubeCheckerServiceManager.)
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
             .andExpect(content().string(""));
