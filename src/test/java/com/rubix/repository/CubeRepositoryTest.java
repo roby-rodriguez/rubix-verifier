@@ -9,7 +9,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.rubix.config.UnitTestConfig;
-import com.rubix.constant.CubeConstants;
+import com.rubix.constant.TestCubeConstants;
 import com.rubix.entity.CubeEntity;
 
 @ActiveProfiles({"test", "unit" })
@@ -17,20 +17,12 @@ import com.rubix.entity.CubeEntity;
 @SpringApplicationConfiguration(classes = UnitTestConfig.class)
 public abstract class CubeRepositoryTest {
 
-    public static final String COLLECTION = CubeConstants.getCollection(CubeConstants.SIZE4);
-
-    public static final String[] EXISTING =
-            {"fcdd|cfcf|eabb|aeae|bdfa|dbec", "dfdf|cafb|bebe|aced|fdaa|ebcc", "dbfa|eadd|bdec|fcbb|cfcf|aeae" };
-
-    public static final String[] NON_EXISTING =
-            {"fcbb|bdec|eadd|dbfa|aeae|cfcf", "dbfa|cfcf|bdec|aeae|fcbb|eadd", "bdec|fcbb|dbfa|eadd|cfcf|aeae" };
-
     @Autowired
     private MongoOperations mongoOperations;
 
     @Before
     public void setup() {
-        importData(CubeRepositoryTest.COLLECTION, CubeRepositoryTest.EXISTING);
+        importData(TestCubeConstants.COLLECTION, TestCubeConstants.EXISTING);
     }
 
     private void importData(String collection, String... keys) {

@@ -1,12 +1,11 @@
 package com.rubix.controller;
 
+import static org.junit.Assert.assertFalse;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.asyncDispatch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,11 @@ import org.springframework.web.context.WebApplicationContext;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rubix.config.UnitTestConfig;
+import com.rubix.constant.CubeConstants;
+import com.rubix.constant.TestCubeConstants;
 import com.rubix.dto.CubeDTO;
+import com.rubix.entity.CubeEntity;
+import com.rubix.factory.TestCubeFactory;
 import com.rubix.repository.CubeRepositoryTest;
 import com.rubix.util.CubeCheckerServiceManager;
 
@@ -36,6 +39,12 @@ import com.rubix.util.CubeCheckerServiceManager;
 public class CubeControllerTest extends CubeRepositoryTest {
 
     private MockMvc mockMvc;
+
+    /** Test cube for request */
+    private CubeDTO testCubeReq;
+
+    /** Test cube for response */
+    private CubeEntity testCubeResp;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -48,41 +57,37 @@ public class CubeControllerTest extends CubeRepositoryTest {
     public void setup() {
         super.setup();
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
+        this.testCubeReq = TestCubeFactory.getCubeMock(TestCubeConstants.CUBE_FACES, CubeConstants.SIZE4);
+        this.testCubeResp = TestCubeFactory.getCubeMock(TestCubeConstants.EXISTING[0]);
     }
 
     // @formatter:off
     @Test
     public void testCheckExists() throws Exception {
-        final MvcResult mvcResult =
+        final MvcResult result =
                 this.mockMvc
                     .perform(
                         post("/checkExists")
                             .contentType(MediaType.APPLICATION_JSON_UTF8)
-                            .content(getJsonContent(getCubeMock()))
+                            .content(getJsonContent(this.testCubeReq))
                     )
                     .andExpect(request().asyncStarted())
                     .andReturn();
 
         this.mockMvc
-            .perform(asyncDispatch(mvcResult))
-            // todo check that when result is written there is still one worker left running
-            // maybe a good way would be to check the count-manager latch
-            //.andExpect(cubeCheckerServiceManager.)
+            .perform(asyncDispatch(result))
+            .andExpect((mvcResult) -> {
+                assertFalse("Some finder threads should still be running when the result is returned", 
+                        cubeCheckerServiceManager.checkFinished());
+            })
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-            .andExpect(content().string(""));
+            .andExpect(content().string(getJsonContent(this.testCubeResp)));
     }
     // @formatter:on
 
-    private String getJsonContent(final CubeDTO cube) throws JsonProcessingException {
+    private <C> String getJsonContent(final C cube) throws JsonProcessingException {
         final ObjectMapper om = new ObjectMapper();
         return om.writeValueAsString(cube);
-    }
-
-    private CubeDTO getCubeMock() {
-        final CubeDTO cube = new CubeDTO();
-        cube.setFaces(Arrays.asList("cece", "fabb", "afaf", "ecdd", "dbfc", "bdea"));
-        cube.setSize(4);
-        return cube;
     }
 }
