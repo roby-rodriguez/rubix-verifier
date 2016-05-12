@@ -29,7 +29,8 @@ public class CubeCheckerTask {
         String collection = CubeConstants.getCollection(alternate.getSize());
         final CubeEntity result = cubeRepository.findByKey(state, collection);
         LOGGER.debug("Finished combination: " + label + " (label) " + permutation + " (permutation)." + " State: "
-                + state + (result == null ? " not " : " ") + "found");
+                + state + (result == null ? " not " : " has been ") + "found");
+        LOGGER.debug("FOUNDED: " + result.getKey());
         return CompletableFuture.completedFuture(result);
     }
 }
