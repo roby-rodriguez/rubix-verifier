@@ -15,4 +15,6 @@ Verifier service for the rubix project
 * [logging recommendations](http://kielczewski.eu/2014/12/few-recommendations-on-logging/)
 * [logging with profiles](http://stackoverflow.com/a/25093568/5173530)
 * [testing async](http://callistaenterprise.se/blogg/teknik/2014/06/23/testing-non-blocking-rest-services-with-spring-mvc-and-spring-boot/)
+* [spring mock configuration](https://lkrnac.net/blog/2014/12/mock-spring-bean/)
+* [further spring mock configuration](http://stackoverflow.com/questions/2457239/injecting-mockito-mocks-into-a-spring-bean#answer-33017609)
 * [nice sample code grep](http://www.programcreek.com/java-api-examples/index.php?api=java.util.concurrent.CompletableFuture)

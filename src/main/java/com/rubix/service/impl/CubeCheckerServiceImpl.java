@@ -26,18 +26,19 @@ public class CubeCheckerServiceImpl implements CubeCheckerService {
     @Autowired
     private CubeCheckerTask cubeCheckerTask;
 
+    @Autowired
+    private CubeCheckerServiceManager cubeCheckerServiceManager;
+
     @Override
     public void check(final CubeDTO cube, final DeferredResult<CubeEntity> deferredResult)
             throws InterruptedException, ExecutionException {
         LOGGER.debug("Launching checker threads for cube: " + cube);
-        final CubeCheckerServiceManager checkerManager =
-                new CubeCheckerServiceManager(CubeConstants.TOTAL_NR_OF_COMBINATIONS);
         for (String label : CubeConstants.CUBE_PERMUTATIONS) {
             for (String permutation : CubeConstants.CUBE_PERMUTATIONS) {
                 final CompletableFuture<CubeEntity> checked = cubeCheckerTask.check(cube, label, permutation);
                 checked.whenCompleteAsync((result, throwable) -> {
-                    if (result != null || checkerManager.checkFinished()) {
-                        LOGGER.debug("RETURNED RESULT NOW");
+                    if (result != null || cubeCheckerServiceManager.checkFinished()) {
+                        LOGGER.debug("RETURNED RESULT NOW" + cubeCheckerServiceManager);
                         // todo check if this setResult call actually ends the write to http stream i.e. sends resp
                         // immediately -> indeed response write is triggered on set, thus it will not wait for the
                         // other (i.e. now irrelevant) threads to finish, see artificial delay set within this commit
