@@ -33,6 +33,7 @@ public class CubeCheckerServiceImpl implements CubeCheckerService {
     public void check(final CubeDTO cube, final DeferredResult<CubeEntity> deferredResult)
             throws InterruptedException, ExecutionException {
         LOGGER.debug("Launching checker threads for cube: " + cube);
+        System.out.println("CHECKER=" + this.cubeCheckerServiceManager);
         for (String label : CubeConstants.CUBE_PERMUTATIONS) {
             for (String permutation : CubeConstants.CUBE_PERMUTATIONS) {
                 final CompletableFuture<CubeEntity> checked = cubeCheckerTask.check(cube, label, permutation);

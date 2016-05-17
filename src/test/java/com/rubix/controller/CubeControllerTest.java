@@ -49,7 +49,7 @@ public class CubeControllerTest extends CubeRepositoryTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    // @Autowired
+    @Autowired
     private CubeCheckerServiceManager cubeCheckerServiceManager;
 
     @Override
@@ -58,8 +58,9 @@ public class CubeControllerTest extends CubeRepositoryTest {
         super.setup();
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
         // autowiring won't work since this bean is prototype-scoped, we need to extract it from the web ctx
-        this.cubeCheckerServiceManager =
-                this.webApplicationContext.getBean("cubeCheckerServiceManager", CubeCheckerServiceManager.class);
+        // this.cubeCheckerServiceManager =
+        // this.webApplicationContext.getBean("cubeCheckerServiceManager", CubeCheckerServiceManager.class);
+        System.out.println("CHECKER=" + this.cubeCheckerServiceManager);
         this.testCubeReq = TestCubeFactory.getCubeMock(TestCubeConstants.CUBE_FACES, CubeConstants.SIZE4);
         this.testCubeResp = TestCubeFactory.getCubeMock(TestCubeConstants.EXISTING[0]);
     }
@@ -80,6 +81,7 @@ public class CubeControllerTest extends CubeRepositoryTest {
         this.mockMvc
             .perform(asyncDispatch(result))
             .andExpect((mvcResult) -> {
+                System.out.println("CHECKER=" + this.cubeCheckerServiceManager);
                 assertFalse("Some finder threads should still be running when the result is returned", 
                         cubeCheckerServiceManager.checkFinished());
             })

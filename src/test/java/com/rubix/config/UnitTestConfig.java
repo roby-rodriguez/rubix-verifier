@@ -15,6 +15,7 @@ import com.rubix.entity.CubeEntity;
 import com.rubix.factory.TestCubeFactory;
 import com.rubix.repository.CubeCustomRepository;
 import com.rubix.repository.impl.CubeRepositoryImpl;
+import com.rubix.util.CubeCheckerServiceManager;
 
 @EnableAutoConfiguration
 @ComponentScan(basePackages = {"com.rubix" })
@@ -31,10 +32,17 @@ public class UnitTestConfig {
                 .thenReturn(TestCubeFactory.getCubeMock(TestCubeConstants.EXISTING[0]));
         // longer-taking finds
         when(repositoryMock.findByKey(TestCubeConstants.EXISTING[1], TestCubeConstants.COLLECTION))
-                .thenAnswer(getAnswer(TestCubeConstants.EXISTING[1]));
+                .thenAnswer(getDelayedAnswer(TestCubeConstants.EXISTING[1]));
         when(repositoryMock.findByKey(TestCubeConstants.EXISTING[2], TestCubeConstants.COLLECTION))
-                .thenAnswer(getAnswer(TestCubeConstants.EXISTING[2]));
+                .thenAnswer(getDelayedAnswer(TestCubeConstants.EXISTING[2]));
         return repositoryMock;
+    }
+
+    @Bean
+    @Primary
+    public CubeCheckerServiceManager cubeMockServiceManager() {
+        // redefinition of bean defaulting to singleton-scope
+        return new CubeCheckerServiceManager();
     }
 
     /**
@@ -42,7 +50,7 @@ public class UnitTestConfig {
      * 
      * @return
      */
-    private Answer<CubeEntity> getAnswer(String key) {
+    private Answer<CubeEntity> getDelayedAnswer(String key) {
         final Answer<CubeEntity> alternateExecution = (inv) -> {
             //
             Thread.sleep(3000);
