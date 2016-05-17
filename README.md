@@ -1,7 +1,7 @@
-# rubix-verifier
+# rubix-verifier [![Build Status](https://travis-ci.org/roby-rodriguez/rubix-verifier.svg?branch=master)](https://travis-ci.org/roby-rodriguez/rubix-verifier)
 Verifier service for the rubix project
 
-# Useful links
+## Useful links
 * [async methods in spring](http://www.leveluplunch.com/java/tutorials/026-asynchronous-native-java-method-calls-spring/)
 * [async configuration](http://www.baeldung.com/spring-async)
 * [task executor](http://stackoverflow.com/questions/2269126/using-spring-threading-and-taskexecutor-how-do-i-know-when-a-thread-is-finished?rq=1) 
